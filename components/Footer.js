@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer class='footer'>
-      <div class='content has-text-centered'>
+    <footer className='footer'>
+      <div className='content has-text-centered'>
         <p>
           <strong>Bulma - Blog theme</strong> by{' '}
           <a href='https://gonzalojs.com'>Gonzalo Gutierrez</a>. Based on the{' '}
