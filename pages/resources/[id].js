@@ -25,23 +25,7 @@ export default function ResourceDetail({ resource }) {
   );
 }
 
-export async function getStaticPaths() {
-  const resData = await fetch('http://localhost:3001/api/resources');
-  const data = await resData.json();
-  const paths = data.map((resource) => {
-    return {
-      params: { id: resource.id },
-    };
-  });
-
-  return {
-    paths,
-    // means that other routes should resolve into 404 page
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const dataRes = await fetch(
     `http://localhost:3001/api/resources/${params.id}`
   );
@@ -51,6 +35,5 @@ export async function getStaticProps({ params }) {
     props: {
       resource: data,
     },
-    revalidate: 1,
   };
 }
