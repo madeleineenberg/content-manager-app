@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function ResourceList({ resources }) {
   return (
@@ -18,6 +19,9 @@ export default function ResourceList({ resources }) {
                         {resource.title}
                       </h1>
                       <p className='has-text-dark'>{resource.description}</p>
+                      <Link href={`/resources/${resource.id}`}>
+                        <a className='button is-info is-light'>Details</a>
+                      </Link>
                     </div>
                   </div>
                 );
