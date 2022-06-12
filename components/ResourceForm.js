@@ -8,8 +8,8 @@ const DEFAULT_DATA = {
   timeToFinish: 60,
 };
 
-export default function ResourceForm({ onFormSubmit }) {
-  const [form, setForm] = useState(DEFAULT_DATA);
+export default function ResourceForm({ onFormSubmit, initalData }) {
+  const [form, setForm] = useState(initalData || DEFAULT_DATA);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
