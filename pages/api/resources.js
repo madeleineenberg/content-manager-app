@@ -9,7 +9,7 @@ export default async function (req, res) {
   }
 
   if (req.method === 'POST' || req.method === 'PATCH') {
-    console.log(req.body);
+    
     const { id, title, description, link, timeToFinish, priority } = req.body;
 
     if (!title || !description || !link || !timeToFinish || !priority) {
