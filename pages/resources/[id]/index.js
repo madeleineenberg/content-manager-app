@@ -2,12 +2,14 @@ import React from 'react';
 import Layout from 'components/Layout';
 import Link from 'next/link';
 import axios from 'axios';
+import ResourceLabel from 'components/ResourceLabel';
+import moment from 'moment';
 
 export default function ResourceDetail({ resource }) {
 
   const activeResource = () => {
     axios.patch("/api/resources", {...resource, status: "active"})
-    .then(() => alert("Resource has been activated"))
+    .then(() => location.reload())
     .catch(() => alert("Cannot active the resource")) 
   }
   return (
@@ -19,16 +21,26 @@ export default function ResourceDetail({ resource }) {
               <div className='columns'>
                 <div className='column is-8 is-offset-2'>
                   <div className='content is-medium'>
-                    <h2 className='subtitle is-4'>{resource.createdAt}</h2>
+                    <h2 className='subtitle is-4'>
+                      {moment(resource.createdAt).format('LLL')}
+                      <ResourceLabel status={resource.status} />
+                    </h2>
                     <h1 className='title'>{resource.title}</h1>
                     <p>{resource.description}</p>
-                    <p>Time to finish: {resource.timeToFinish}</p>
-                    <Link href={`/resources/${resource.id}/edit`}>
-                      <a className='button is-warning'>Update</a>
-                    </Link>
-                    <button onClick={activeResource} className="button is-success ml-1">
-                      Activate
-                    </button>
+                    <p>Time to finish: {resource.timeToFinish} min</p>
+                    {resource.status === 'inactive' && (
+                      <>
+                        <Link href={`/resources/${resource.id}/edit`}>
+                          <a className='button is-warning'>Update</a>
+                        </Link>
+                        <button
+                          onClick={activeResource}
+                          className='button is-success ml-1'
+                        >
+                          Activate
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -41,9 +53,7 @@ export default function ResourceDetail({ resource }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const dataRes = await fetch(
-    `http://localhost:3001/api/resources/${params.id}`
-  );
+  const dataRes = await fetch(`${process.env.API_URL}/resources/${params.id}`);
   const data = await dataRes.json();
 
   return {

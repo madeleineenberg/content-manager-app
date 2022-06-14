@@ -24,7 +24,7 @@ export async function getServerSideProps() {
   // function is executed on the server
   // data are always fresh
 
-  const resData = await fetch('http://localhost:3001/api/resources');
+  const resData = await fetch(`${process.env.API_URL}/resources`);
   const data = await resData.json();
  
   return {

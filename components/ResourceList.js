@@ -1,5 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
+import ResourceLabel from './ResourceLabel';
+import moment from 'moment';
 
 export default function ResourceList({ resources }) {
   return (
@@ -13,7 +15,8 @@ export default function ResourceList({ resources }) {
                   <div className='column is-5 is-offset-1 ' key={resource.id}>
                     <div className='content is-medium'>
                       <h2 className='subtitle is-5 has-text-grey'>
-                        {resource.createdAt}
+                        {moment(resource.createdAt).format('LLL')}
+                        <ResourceLabel status={resource.status} />
                       </h2>
                       <h1 className='title has-text-black is-3'>
                         {resource.title}
